@@ -1,62 +1,241 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-KVMFF3LK');</script>
-  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8" />
+  <title>Curator Training: File-based vs Record-based Metadata</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem;
+      background: #f9fafb;
+      color: #111827;
+    }
 
-  <title>UserGuiding Test</title>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    h1, h2, h3 {
+      color: #1f2937;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .step {
+      margin-bottom: 3rem;
+    }
+
+    .scenario {
+      background: #eef2ff;
+      padding: 1rem;
+      border-left: 4px solid #6366f1;
+      margin-bottom: 1.5rem;
+    }
+
+    .question {
+      margin-top: 1rem;
+    }
+
+    .options label {
+      display: block;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      background: #4f46e5;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .correct {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #10b981;
+    }
+
+    .incorrect {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #ef4444;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .table th, .table td {
+      border: 1px solid #e5e7eb;
+      padding: 0.5rem;
+      text-align: left;
+    }
+
+    .completion {
+      background: #f0fdf4;
+      padding: 1.5rem;
+      border-left: 4px solid #22c55e;
+    }
+  </style>
 </head>
-
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KVMFF3LK" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <h1>Hello! This is a blank test page.</h1>
+  <div class="container">
 
-  <!-- UserGuiding Embed Script -->
+    <h1>Curator Training Module</h1>
+    <h2>File-based vs. Record-based Metadata</h2>
+
+    <div class="step">
+      <h3>Scenario</h3>
+      <div class="scenario">
+        Sue is a laboratory technician who generates RNA sequencing data for
+        <strong>15 patients</strong>, producing <strong>30 sequencing files</strong>
+        (two files per patient).
+        <br /><br />
+        She first creates patient records with clinical metadata, then annotates
+        RNA-seq files in Curator with file-specific metadata.
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>Step 1: Record-based Metadata</h3>
+
+      <p>Patient records store metadata that describe the participant.</p>
+
+      <table class="table">
+        <tr>
+          <th>patient_id</th>
+          <th>diagnosis</th>
+          <th>age_bracket</th>
+          <th>sex</th>
+        </tr>
+        <tr>
+          <td>001</td>
+          <td>Glioblastoma</td>
+          <td>50–59</td>
+          <td>Male</td>
+        </tr>
+      </table>
+
+      <div class="question">
+        <strong>Which metadata belongs in a patient record?</strong>
+        <div class="options">
+          <label><input type="radio" name="q1" value="a"> File format</label>
+          <label><input type="radio" name="q1" value="b"> Read length</label>
+          <label><input type="radio" name="q1" value="c"> Diagnosis</label>
+          <label><input type="radio" name="q1" value="d"> Sequencing platform</label>
+        </div>
+        <button onclick="checkAnswer('q1','c','f1')">Submit</button>
+        <div id="f1" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>Step 2: File-based Metadata</h3>
+
+      <p>File-based metadata describe how each data file was generated.</p>
+
+      <table class="table">
+        <tr>
+          <th>filename</th>
+          <th>assay</th>
+          <th>fileType</th>
+          <th>patient_id</th>
+        </tr>
+        <tr>
+          <td>sample1_read1.fastq</td>
+          <td>RNA-seq</td>
+          <td>fastq</td>
+          <td>001</td>
+        </tr>
+      </table>
+
+      <div class="question">
+        <strong>Which field links files back to patient records?</strong>
+        <div class="options">
+          <label><input type="radio" name="q2" value="a"> filename</label>
+          <label><input type="radio" name="q2" value="b"> assay</label>
+          <label><input type="radio" name="q2" value="c"> patient_id</label>
+          <label><input type="radio" name="q2" value="d"> fileType</label>
+        </div>
+        <button onclick="checkAnswer('q2','c','f2')">Submit</button>
+        <div id="f2" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>Step 3: Adding New Data</h3>
+
+      <div class="question">
+        <strong>
+          Sue generates new processed files for the same patients. What should she do?
+        </strong>
+        <div class="options">
+          <label><input type="radio" name="q3" value="a"> Create new patient records</label>
+          <label><input type="radio" name="q3" value="b"> Reuse existing records and link files</label>
+          <label><input type="radio" name="q3" value="c"> Store patient data only on files</label>
+          <label><input type="radio" name="q3" value="d"> Merge all metadata into one table</label>
+        </div>
+        <button onclick="checkAnswer('q3','b','f3')">Submit</button>
+        <div id="f3" class="feedback"></div>
+      </div>
+    </div>
+
+    <div class="completion">
+      <h3>🎉 Module Complete</h3>
+      <p>
+        You now understand how Curator separates record-based and file-based metadata
+        to support scalable, reusable, and well-organized datasets.
+      </p>
+    </div>
+
+  </div>
+
   <script>
-    (function (g, u, i, d, e, s) {
-      g[e] = g[e] || [];
-      var f = u.getElementsByTagName(i)[0];
-      var k = u.createElement(i);
-      k.async = true;
-      k.src = 'https://static.userguiding.com/media/user-guiding-' + s + '-embedded.js';
-      f.parentNode.insertBefore(k, f);
+    function checkAnswer(questionName, correctValue, feedbackId) {
+      const options = document.getElementsByName(questionName);
+      let selected = null;
 
-      if (g[d]) return;
-
-      var ug = g[d] = { q: [] };
-      ug.c = function (n) {
-        return function () {
-          ug.q.push([n, arguments]);
-        };
-      };
-
-      var methods = [
-        'previewGuide',
-        'finishPreview',
-        'track',
-        'identify',
-        'hideChecklist',
-        'launchChecklist'
-      ];
-
-      for (var j = 0; j < methods.length; j++) {
-        ug[methods[j]] = ug.c(methods[j]);
+      for (const opt of options) {
+        if (opt.checked) selected = opt.value;
       }
-    })(window, document, 'script', 'userGuiding', 'userGuidingLayer', '2CD109504UBFID');
+
+      const feedback = document.getElementById(feedbackId);
+      feedback.style.display = "block";
+
+      if (selected === correctValue) {
+        feedback.className = "feedback correct";
+        feedback.innerHTML = "✅ Correct! This follows Curator best practices.";
+      } else {
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = "❌ Not quite. Review which metadata belongs at the record vs. file level.";
+      }
+    }
   </script>
-
 </body>
-
 </html>
